@@ -4,7 +4,7 @@ import { Image } from 'react-native';
 function HeroImage(props) {
   return (
     <Image
-      source={{ uri: props.imageUrl }}
+      source={{ uri: props.imageURL }}
       style={{ height: 250 }}
     />
   );

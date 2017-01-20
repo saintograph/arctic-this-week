@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import MenuBar from './components/header';
 import HeroImage from './components/hero-image';
 import NewsList from './components/news-list';
+import SingleItem from './views/single-item';
+import About from './views/about';
+import Contact from './views/contact';
 
-const imageUrl = 'https://images.unsplash.com/photo-1478194409487-fa5c1eb18622?dpr=1&auto=format&fit=crop&w=1500&h=970&q=80&cs=tinysrgb&crop=';
+const imageURL = 'https://images.unsplash.com/photo-1478194409487-fa5c1eb18622?dpr=1&auto=format&fit=crop&w=1500&h=970&q=80&cs=tinysrgb&crop=';
 
 export default class MainApp extends Component {
   render() {
@@ -13,8 +16,9 @@ export default class MainApp extends Component {
       <View>
         <MenuBar />
         <Animatable.View animation="fadeIn">
-          <HeroImage imageUrl={imageUrl} />
-          <NewsList />
+          {/*   <HeroImage imageURL={imageURL} />
+            <NewsList /> */}
+          <Contact />
         </Animatable.View>
       </View>
     );
