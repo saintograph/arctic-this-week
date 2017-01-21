@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import ReduxPromise from 'redux-promise';
 import MenuBar from './components/header';
 import HeroImage from './components/hero-image';
 import NewsList from './components/news-list';
