@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { loadAllNews } from '../actions/index';
 
 const { height } = Dimensions.get('window');
 
@@ -40,23 +43,42 @@ const {
   titleBrand,
 } = styles;
 
-function About() {
-  return (
-    <ScrollView style={mainView}>
-      <View style={{ margin: 25 }}>
-        <View style={titleHeadingContainer}>
-          <Text style={titleHeading}>Contact
-          <Text style={titleBrand}> The Arctic Institute</Text>
-          </Text>
+class About extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+    this.props.loadAllNews();
+  }
+  render() {
+    console.log(this.props.news);
+    return (
+      <ScrollView style={mainView}>
+        <View style={{ margin: 25 }}>
+          <View style={titleHeadingContainer}>
+            <Text style={titleHeading}>Contact
+            <Text style={titleBrand}> The Arctic Institute</Text>
+            </Text>
+          </View>
+          <Text style={mainContent}>Center for Circumpolar Security Studies
+          Washington, DC 20007</Text>
+          <Text>as</Text>
+          <Text style={mainContent}>Phone: +1 (202) 350-1384</Text>
+          <Text style={mainContent}>Email: info@thearcticinstitute.org</Text>
+          <Text style={mainContent}>Media Enquiries: media@thearcticinstitute.org</Text>
         </View>
-        <Text style={mainContent}>Center for Circumpolar Security Studies
-         Washington, DC 20007</Text>
-        <Text style={mainContent}>Phone: +1 (202) 350-1384</Text>
-        <Text style={mainContent}>Email: info@thearcticinstitute.org</Text>
-        <Text style={mainContent}>Media Enquiries: media@thearcticinstitute.org</Text>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  }
 }
 
-export default About;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ loadAllNews }, dispatch);
+}
+
+function mapStateToProps({ news }) {
+  return { news };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(About);
