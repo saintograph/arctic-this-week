@@ -11,6 +11,8 @@ const styles = StyleSheet.create({
   },
   listTitle: {
     fontFamily: 'knile-semibolditalic',
+    fontSize: 24,
+    paddingBottom: 5,
   },
   listContent: {
     fontFamily: 'calendas_plus',
@@ -19,8 +21,8 @@ const styles = StyleSheet.create({
   dateAuthor: {
     fontFamily: 'calendas_plus',
     fontSize: 11,
-    marginBottom: 5,
-    marginTop: -10,
+    // marginBottom: -10,
+    marginTop: -5,
     color: '#858585',
   },
   author: {
@@ -39,14 +41,35 @@ const {
   author,
 } = styles;
 
-function NewsList({ post }) {
+function NewsListItem({ post }) {
+  let category;
+  if (post.categories == 3) {
+    category = "Defense and Security";
+  } else if (post.categories == 4) {
+    category = "Climate and Environment";
+  } else if (post.categories == 5) {
+    category = "Indigenous Rights and Issues";
+  } else if (post.categories == 6) {
+    category = "Law and Governance";
+  } else if (post.categories == 7) {
+    category = "Natural Resources and Energy";
+  } else if (post.categories == 8) {
+    category = "Politics and Strategy";
+  } else if (post.categories == 9) {
+    category = "Shipping and Economics";
+  } else if (post.categories == 10) {
+    category = "Society and Culture";
+  } else {
+    category = "General News";
+  }
+
   return (
     <View>
       <List style={list}>
         <ListItem>
           <Thumbnail style={thumbnailOpacity} />
           <Text style={listTitle}>{post.title.rendered}</Text>
-          <Text style={dateAuthor}>Climate & Environment | <Text style={author}>{post.acf.author}</Text></Text>
+          <Text style={dateAuthor}>{category} | <Text style={author}>{post.acf.author}</Text></Text>
           <Text style={listContent} note>{post.acf.excerpt}</Text>
         </ListItem>
       </List>
@@ -55,4 +78,4 @@ function NewsList({ post }) {
 }
 
 
-export default NewsList;
+export default NewsListItem;

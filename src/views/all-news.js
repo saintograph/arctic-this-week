@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { View, ScrollView, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { loadAllNews } from '../actions/index';
-import NewsList from '../components/news-list';
+import NewsListItem from '../components/news-list-item';
 import HeroImage from '../components/hero-image';
-import Test from '../components/test';
+// import Test from '../components/test';
 
 class AllNews extends Component {
 
@@ -15,7 +15,7 @@ class AllNews extends Component {
 
   renderNews() {
     return this.props.news.news.map((post) => {
-      return (<Text key={post.id}>{post.date}</Text>);
+      return <NewsListItem key={post.id} post={post} />;
     });
   }
 
@@ -24,7 +24,6 @@ class AllNews extends Component {
     return (
       <ScrollView>
         <HeroImage imageURL={imageURL} />
-        <NewsList />
         {this.renderNews()}
       </ScrollView>
     );
