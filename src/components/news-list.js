@@ -46,7 +46,7 @@ function NewsList() {
         <ListItem>
           <Thumbnail style={thumbnailOpacity} />
           <Text style={listTitle}>Faster Internet for 20,000 Greenlanders</Text>
-          <Text style={dateAuthor}>25 January | <Text style={author}>Andreas Raspotnik</Text></Text>
+          <Text style={dateAuthor}>Climate & Environment | <Text style={author}>Andreas Raspotnik</Text></Text>
           <Text style={listContent} note>A center aspect designed for efficient representation of
           vertically scrolling lists of changing data.</Text>
         </ListItem>

@@ -1,7 +1,7 @@
 import { LOAD_ALL_NEWS } from '../actions';
 
 const initialState = {
-  news: [],
+  news: [{id: '123'}],
 };
 
 export default function (state = initialState, action) {
@@ -9,7 +9,7 @@ export default function (state = initialState, action) {
     case LOAD_ALL_NEWS:
       return {
         ...state,
-        news: [action.payload],
+        news: action.payload.data,
       };
     default:
       return state;

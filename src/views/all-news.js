@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { loadAllNews } from '../actions/index';
 import NewsList from '../components/news-list';
 import HeroImage from '../components/hero-image';
+import Test from '../components/test';
 
 class AllNews extends Component {
-  constructor(props) {
-    super(props);
+
+  componentDidMount() {
+    this.props.loadAllNews();
   }
 
-  componentWillMount() {
-    this.props.loadAllNews();
+  renderNews() {
+    return this.props.news.news.map((post) => {
+      return (<Text key={post.id}>{post.date}</Text>);
+    });
   }
 
   render() {
@@ -21,17 +25,19 @@ class AllNews extends Component {
       <ScrollView>
         <HeroImage imageURL={imageURL} />
         <NewsList />
+        {this.renderNews()}
       </ScrollView>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ loadAllNews }, dispatch);
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators({ loadAllNews }, dispatch);
+// }
+
+function mapStateToProps(state) {
+  return { news: state.news };
 }
 
-function mapStateToProps({ news }) {
-  return { news };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AllNews);
+// export default connect(mapStateToProps, mapDispatchToProps)(AllNews);
+export default connect(mapStateToProps, { loadAllNews })(AllNews);
