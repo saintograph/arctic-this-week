@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { loadAllNews } from '../actions/index';
 import NewsListItem from '../components/news-list-item';
@@ -15,17 +15,23 @@ class AllNews extends Component {
 
   renderNews() {
     return this.props.news.news.map((post) => {
-      return <NewsListItem key={post.id} post={post} />;
+      return (
+        <TouchableOpacity key={post.id}>
+          <NewsListItem post={post} />
+        </TouchableOpacity>
+      );
     });
   }
 
   render() {
     const imageURL = 'https://images.unsplash.com/photo-1478194409487-fa5c1eb18622?dpr=1&auto=format&fit=crop&w=1500&h=970&q=80&cs=tinysrgb&crop=';
     return (
-      <ScrollView>
+      <View>
         <HeroImage imageURL={imageURL} />
-        {this.renderNews()}
-      </ScrollView>
+        <ScrollView>
+          {this.renderNews()}
+        </ScrollView>
+      </View>
     );
   }
 }

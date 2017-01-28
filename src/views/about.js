@@ -49,7 +49,7 @@ function About() {
       <View style={{ margin: 25 }}>
         <View style={titleHeadingContainer}>
           <Text style={titleHeading}>About
-          <Text style={titleBrand}> The Arctic Institute</Text>
+            <Text style={titleBrand}> The Arctic Institute</Text>
           </Text>
         </View>
         <Text style={mainContent}>Established in 2011, The Arctic Institute is an independent,
