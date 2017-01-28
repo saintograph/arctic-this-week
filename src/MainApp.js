@@ -1,22 +1,33 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Button } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import { StackNavigator } from 'react-navigation';
 import MenuBar from './components/header';
 import AllNews from './views/all-news';
+import About from './views/single-item';
 
+class MainApp extends Component {
 
-// let store = createStore(reducers, applyMiddleware(promise));
+  static navigationOptions = {
+    title: 'The Arctic This Week',
+  };
 
-
-export default class MainApp extends Component {
   render() {
+    const { navigate } = this.props.navigation;
     return (
-        <View>
-          <MenuBar />
-          <Animatable.View animation="fadeIn">
-            <AllNews />
-          </Animatable.View>
-        </View>
+      <View>
+        <Animatable.View animation="fadeIn">
+          <Button onPress={() => navigate('AboutMe') } 
+          title="News"
+          />
+          <AllNews />
+        </Animatable.View>
+      </View>
     );
   }
 }
+
+export default AppShell = StackNavigator({
+  Home: { screen: MainApp },
+  AboutMe: { screen: About },
+});
