@@ -1,24 +1,16 @@
 import React, { Component } from 'react';
 import { View, Button, Text } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { StackNavigator } from 'react-navigation';
+import { Actions } from 'react-native-router-flux';
 import MenuBar from './components/header';
 import AllNews from './views/all-news';
 import About from './views/about';
+import Test from './components/test';
 
 class MainApp extends Component {
 
-  static navigationOptions = {
-    title: 'The Arctic This Week!',
-    header: {
-      right: <Text 
-      style={{color: 'red'}}>Text
-      </Text>,
-    },
-  };
 
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <View>
         <Animatable.View animation="fadeIn">
@@ -29,6 +21,4 @@ class MainApp extends Component {
   }
 }
 
-export default AppShell = StackNavigator({
-  Home: { screen: MainApp },
-});
+export default MainApp;

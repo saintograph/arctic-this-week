@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
-import { bindActionCreators } from 'redux';
+import { List, ListItem } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import { loadAllNews } from '../actions/index';
 import NewsListItem from '../components/news-list-item';
 import HeroImage from '../components/hero-image';
-// import Test from '../components/test';
+
 
 class AllNews extends Component {
 
@@ -14,11 +15,15 @@ class AllNews extends Component {
   }
 
   renderNews() {
-    return this.props.news.news.map((post) => {
+    const { news } = this.props.news;
+    const goToTest = () => Actions.test({text: "Test!"});
+    return news.map((post) => {
       return (
-        <TouchableOpacity key={post.id}>
-          <NewsListItem post={post} />
-        </TouchableOpacity>
+        <List>
+          <TouchableOpacity key={post.id} >
+            <ListItem onPress={goToTest}><Text>Test</Text></ListItem>
+          </TouchableOpacity>
+        </List>
       );
     });
   }
@@ -26,7 +31,7 @@ class AllNews extends Component {
   render() {
     const imageURL = 'https://images.unsplash.com/photo-1478194409487-fa5c1eb18622?dpr=1&auto=format&fit=crop&w=1500&h=970&q=80&cs=tinysrgb&crop=';
     return (
-      <View>
+      <View style={{ marginTop: 54 }}>
         <HeroImage imageURL={imageURL} />
         <ScrollView>
           {this.renderNews()}
@@ -36,6 +41,14 @@ class AllNews extends Component {
   }
 }
 
+AllNews.propTypes = {
+  news: React.PropTypes.objectOf(React.PropTypes.array),
+};
+
+AllNews.defaultProps = {
+  news: [],
+};
+
 // function mapDispatchToProps(dispatch) {
 //   return bindActionCreators({ loadAllNews }, dispatch);
 // }
@@ -43,6 +56,7 @@ class AllNews extends Component {
 function mapStateToProps(state) {
   return { news: state.news };
 }
+
 
 // export default connect(mapStateToProps, mapDispatchToProps)(AllNews);
 export default connect(mapStateToProps, { loadAllNews })(AllNews);
