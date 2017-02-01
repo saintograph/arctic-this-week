@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
-import { List, ListItem } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { loadAllNews } from '../actions/index';
 import NewsListItem from '../components/news-list-item';
@@ -19,11 +18,9 @@ class AllNews extends Component {
     const goToTest = () => Actions.test({text: "Test!"});
     return news.map((post) => {
       return (
-        <List>
-          <TouchableOpacity key={post.id} >
-            <ListItem onPress={goToTest}><Text>Test</Text></ListItem>
-          </TouchableOpacity>
-        </List>
+        <TouchableOpacity key={post.id} >
+          <View onPress={goToTest}><Text>Test</Text></View>
+        </TouchableOpacity>
       );
     });
   }

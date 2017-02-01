@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { List, ListItem, Text, Thumbnail } from 'native-base';
 
 const styles = StyleSheet.create({
   list: {
@@ -65,14 +64,9 @@ function NewsListItem({ post }) {
 
   return (
     <View>
-      <List style={list}>
-        <ListItem>
-          <Thumbnail style={thumbnailOpacity} />
-          <Text style={listTitle}>{post.title.rendered}</Text>
-          <Text style={dateAuthor}>{category} | <Text style={author}>{post.acf.author}</Text></Text>
-          <Text style={listContent} note>{post.acf.excerpt}</Text>
-        </ListItem>
-      </List>
+      <Text style={listTitle}>{post.title.rendered}</Text>
+      <Text style={dateAuthor}>{category} | <Text style={author}>{post.acf.author}</Text></Text>
+      <Text style={listContent} note>{post.acf.excerpt}</Text>
     </View>
   );
 }

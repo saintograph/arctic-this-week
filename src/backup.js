@@ -4,7 +4,6 @@ import * as Animatable from 'react-native-animatable';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import promise from 'redux-promise';
-import MenuBar from './components/header';
 import AllNews from './views/all-news';
 import reducers from './reducers';
 
@@ -18,7 +17,6 @@ export default class MainApp extends Component {
     return (
       <Provider store={createStoreWithMiddleware(reducers)}>
         <View>
-          <MenuBar />
           <Animatable.View animation="fadeIn">
             <AllNews />
           </Animatable.View>
