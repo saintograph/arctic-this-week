@@ -7,7 +7,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "@shoutem/ui": "^0.10.7",
     "axios": "^0.15.3",
+    "nachos-ui": "^0.1.0",
     "native-base": "^0.5.22",
     "react": "~15.4.0-rc.4",
     "react-native": "0.38.1",
