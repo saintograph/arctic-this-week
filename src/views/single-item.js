@@ -6,6 +6,7 @@ const { height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   mainView: {
     backgroundColor: '#f3f3f3',
+    paddingTop: 50,
     height,
   },
   category: {
