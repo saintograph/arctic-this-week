@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import Swiper from 'react-native-swiper';
+import SingleItem from './single-item';
 
 export default class SwipeView extends Component {
   renderPost() {
-    console.log(this.props.newsProps.post);
     return (
       this.props.newsProps.post.map((post) => {
         return (
-          <View key={post.id} style={{ marginTop: 175 }}>
-            <Text>{post.id}</Text>
+          <View key={post.id}>
+            <SingleItem post={post} />
           </View>
         );
       })
@@ -17,9 +17,10 @@ export default class SwipeView extends Component {
   }
 
   render() {
+    const { index } = this.props.newsProps.index;
     return (
       <Swiper
-        index={this.props.newsProps.index}
+        index={index}
         loop={false}
       >
         {this.renderPost()}
@@ -29,9 +30,9 @@ export default class SwipeView extends Component {
 }
 
 SwipeView.propTypes = {
-  newsProps: React.PropTypes.objectOf(React.PropTypes.array),
+  newsProps: React.PropTypes.objectOf(React.PropTypes.object),
 };
 
 SwipeView.defaultProps = {
-  newsProps: [],
+  newsProps: {},
 };

@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { loadAllNews } from '../actions/index';
-import NewsListItem from '../components/news-list-item';
 import HeroImage from '../components/hero-image';
-
-
 
 class AllNews extends Component {
 

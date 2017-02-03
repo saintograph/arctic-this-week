@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   mainView: {
     backgroundColor: '#f3f3f3',
     paddingTop: 50,
+    paddingBottom: 50,
     height,
   },
   category: {
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'knile-semibold',
     color: '#1c1c1e',
+    marginTop: 25,
   },
   references: {
     marginTop: 10,
@@ -70,30 +72,43 @@ const {
   references,
 } = styles;
 
-function SingleItem() {
+function SingleItem({post}) {
+  let categoryNews;
+  if (post.categories[0] == 3) {
+    categoryNews = "Defense and Security";
+  } else if (post.categories[0] == 4) {
+    categoryNews = "Climate and Environment";
+  } else if (post.categories[0] == 5) {
+    categoryNews = "Indigenous Rights and Issues";
+  } else if (post.categories[0] == 6) {
+    categoryNews = "Law and Governance";
+  } else if (post.categories[0] == 7) {
+    categoryNews = "Natural Resources and Energy";
+  } else if (post.categories[0] == 8) {
+    categoryNews = "Politics and Strategy";
+  } else if (post.categories[0] == 9) {
+    categoryNews = "Shipping and Economics";
+  } else if (post.categories[0] == 10) {
+    categoryNews = "Society and Culture";
+  } else {
+    categoryNews = "General News";
+  }
   return (
-    <ScrollView style={mainView}>
-      <View style={{ margin: 25 }}>
-        <Text style={category}>defense and security</Text>
-        <View style={titleHeadingContainer}>
-          <Text style={titleHeading}>15 Effective Ways to Combat Global Warming</Text>
+    <View style={mainView}>
+      <ScrollView>
+        <View style={{ margin: 25 }}>
+          <Text style={category}>{categoryNews}</Text>
+          <View style={titleHeadingContainer}>
+            <Text style={titleHeading}>{post.title.rendered}</Text>
+          </View>
+          <Text style={readingTime}>3 minute read</Text>
+          <Text style={mainContent}>{post.plaintext}</Text>
+          {post.acf.blockquote === '' ? <View style={{ marginTop: -45 }}></View> : <Text style={quote}>{post.acf.blockquote}</Text> }
+          <Text style={referenceTitle}>References</Text>
+          <Text style={references}>{post.acf.references}</Text>
         </View>
-        <Text style={readingTime}>3 minute read</Text>
-        <Text style={mainContent}>Find that perfect color with our color picker and discover
-        beautiful color harmonies, tints, shades and tones; input Hex color codes, RGB and
-        HSL values, and generate HTML, CSS and SCSS styles. </Text>
-        <Text style={quote}>"Input Hex color codes, RGB and HSL values"</Text>
-        <Text style={mainContent}>Find that perfect color with our color picker and discover
-        beautiful color harmonies, tints, shades and tones; input Hex color codes, RGB and
-        HSL values, and generate HTML, CSS and SCSS styles. </Text>
-        <Text style={referenceTitle}>References</Text>
-        <Text style={references}>http://example.com</Text>
-        <Text style={references}>http://example.com</Text>
-        <Text style={references}>http://example.com</Text>
-        <Text style={references}>http://example.com</Text>
-        <Text style={references}>http://example.com</Text>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
