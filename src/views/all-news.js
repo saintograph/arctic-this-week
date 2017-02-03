@@ -10,25 +10,21 @@ import HeroImage from '../components/hero-image';
 
 class AllNews extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   async componentDidMount() {
     await this.props.loadAllNews();
   }
 
   renderNews() {
     const { news } = this.props.news;
-    const goToTest = () => Actions.test({ text: 'Test!', title: 'Edit this' });
-    const goToNewsItem = () => Actions.singleItem({});
-    const swipeMe = () => Actions.swipeView({});
-    return news.map((post) => {
+    const swipeMe = newsProps => Actions.swipeView({ newsProps });
+    return news.map((post, index) => {
+      const newsProps = {
+        index,
+        post: news,
+      };
       return (
         <TouchableOpacity key={post.id} >
-          <View style={{ margin: 50 }}>
-            <Text onPress={swipeMe}>Test 1</Text>
-          </View>
+          <Text onPress={swipeMe.bind(this, newsProps)}>{post.title.rendered}</Text>
         </TouchableOpacity>
       );
     });
