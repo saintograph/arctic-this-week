@@ -71,7 +71,7 @@ class AllNews extends Component {
       <View style={{ marginTop: 54 }}>
         <ScrollView>
           <HeroImage imageURL={imageURL} />
-          <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 20, marginBottom: -25 }}>
             {this.renderNews()}
           </View>
         </ScrollView>
