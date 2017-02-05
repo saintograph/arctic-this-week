@@ -17,7 +17,7 @@ export default class SwipeView extends Component {
   }
 
   render() {
-    const { index } = this.props.newsProps.index;
+    const { index } = this.props.newsProps;
     return (
       <Swiper
         index={index}

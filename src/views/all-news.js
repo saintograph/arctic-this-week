@@ -1,9 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import TimeAgo from 'react-native-timeago';
 import { loadAllNews } from '../actions/index';
 import HeroImage from '../components/hero-image';
+
+const styles = StyleSheet.create({
+  newsBlock: {
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#F3F3F3',
+    paddingLeft: 25,
+    paddingRight: 25,
+    paddingBottom: 20,
+  },
+  newsTitle: {
+    fontFamily: 'knile-semibolditalic',
+    color: '#000000',
+    fontSize: 16,
+    marginBottom: 2,
+  },
+  metaData: {
+    fontFamily: 'calendas_plus_italic',
+    fontSize: 10,
+    marginBottom: 5,
+  },
+  newsExcerpt: {
+    fontFamily: 'calendas_plus',
+    fontSize: 14,
+  },
+});
+
+const { newsTitle, newsBlock, metaData, newsExcerpt } = styles;
 
 class AllNews extends Component {
 
@@ -20,8 +50,16 @@ class AllNews extends Component {
         post: news,
       };
       return (
-        <TouchableOpacity key={post.id} >
-          <Text onPress={swipeMe.bind(this, newsProps)}>{post.title.rendered}</Text>
+        <TouchableOpacity key={post.id} onPress={swipeMe.bind(this, newsProps)}>
+          <View style={newsBlock}>
+            <Text
+              style={newsTitle}
+            >
+              {post.title.rendered}
+            </Text>
+            <Text style={metaData}><TimeAgo time={post.date} /> | {post.acf.author}</Text>
+            <Text style={newsExcerpt}>{post.acf.excerpt}</Text>
+          </View>
         </TouchableOpacity>
       );
     });
@@ -33,7 +71,9 @@ class AllNews extends Component {
       <View style={{ marginTop: 54 }}>
         <ScrollView>
           <HeroImage imageURL={imageURL} />
-          {this.renderNews()}
+          <View style={{ marginTop: 20 }}>
+            {this.renderNews()}
+          </View>
         </ScrollView>
       </View>
     );
