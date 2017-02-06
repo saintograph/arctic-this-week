@@ -75,7 +75,7 @@ const {
 function SingleItem({post}) {
   let categoryNews;
   if (post.categories[0] == 3) {
-    categoryNews = "Defense and Security";
+    categoryNews = 'Defense and Security';
   } else if (post.categories[0] == 4) {
     categoryNews = "Climate and Environment";
   } else if (post.categories[0] == 5) {
@@ -103,7 +103,7 @@ function SingleItem({post}) {
           </View>
           <Text style={readingTime}>3 minute read</Text>
           <Text style={mainContent}>{post.plaintext}</Text>
-          {post.acf.blockquote === '' ? <View style={{ marginTop: -45 }}></View> : <Text style={quote}>{post.acf.blockquote}</Text> }
+          {post.acf.blockquote === '' ? <View style={{ marginTop: -45 }} /> : <Text style={quote}>{post.acf.blockquote}</Text> }
           <Text style={referenceTitle}>References</Text>
           <Text style={references}>{post.acf.references}</Text>
         </View>

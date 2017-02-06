@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import promise from 'redux-promise';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/Ionicons';
 import AppShell from './src/MainApp';
 import SwipeView from './src/views/swipe-view';
 import Test from './src/components/test';
@@ -21,9 +20,8 @@ function rightButton() {
 
 const scenes = Actions.create(
   <Scene key="root">
-    <Scene key="shell" component={AppShell} title="Arctic This Week" onRight={() => {rightButton()}} rightButtonImage={require('./src/images/menu.png')} />
-    <Scene key="test" component={Test} titleStyle={{ textAlign: 'left', marginLeft: -150 }} />
-    <Scene key="swipeView" component={SwipeView} title="Top 5 This Week" onRight={() => {rightButton()}} rightButtonImage={require('./src/images/menu.png')} />
+    <Scene key="shell" component={AppShell} title="Arctic This Week" onRight={() => { rightButton(); }} rightButtonImage={require('./src/images/menu.png')} />
+    <Scene key="swipeView" component={SwipeView} title="Top 5 This Week" onRight={() => { rightButton(); }} rightButtonImage={require('./src/images/menu.png')} />
   </Scene>,
 );
 
