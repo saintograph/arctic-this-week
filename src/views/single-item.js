@@ -44,12 +44,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'knile-semibold',
     color: '#1c1c1e',
+    paddingTop: 15,
   },
   referenceTitle: {
-    fontSize: 16,
+    fontSize: 21,
     fontFamily: 'knile-semibold',
     color: '#1c1c1e',
-    marginTop: 25,
+    marginTop: 5,
   },
   references: {
     marginTop: 10,
@@ -72,27 +73,31 @@ const {
   references,
 } = styles;
 
-function SingleItem({post}) {
+export default function SingleItem({ post }) {
   let categoryNews;
-  if (post.categories[0] == 3) {
+  if (post.categories[0] === 3) {
     categoryNews = 'Defense and Security';
-  } else if (post.categories[0] == 4) {
-    categoryNews = "Climate and Environment";
-  } else if (post.categories[0] == 5) {
-    categoryNews = "Indigenous Rights and Issues";
-  } else if (post.categories[0] == 6) {
-    categoryNews = "Law and Governance";
-  } else if (post.categories[0] == 7) {
-    categoryNews = "Natural Resources and Energy";
-  } else if (post.categories[0] == 8) {
-    categoryNews = "Politics and Strategy";
-  } else if (post.categories[0] == 9) {
-    categoryNews = "Shipping and Economics";
-  } else if (post.categories[0] == 10) {
-    categoryNews = "Society and Culture";
+  } else if (post.categories[0] === 4) {
+    categoryNews = 'Climate and Environment';
+  } else if (post.categories[0] === 5) {
+    categoryNews = 'Indigenous Rights and Issues';
+  } else if (post.categories[0] === 6) {
+    categoryNews = 'Law and Governance';
+  } else if (post.categories[0] === 7) {
+    categoryNews = 'Natural Resources and Energy';
+  } else if (post.categories[0] === 8) {
+    categoryNews = 'Politics and Strategy';
+  } else if (post.categories[0] === 9) {
+    categoryNews = 'Shipping and Economics';
+  } else if (post.categories[0] === 10) {
+    categoryNews = 'Society and Culture';
   } else {
-    categoryNews = "General News";
+    categoryNews = 'General News';
   }
+
+  const strippedHTML = post.acf.references.replace(/(<([^>]+)>)/ig, '\n');
+  const referenceArray = [];
+
   return (
     <View style={mainView}>
       <ScrollView>
@@ -102,14 +107,20 @@ function SingleItem({post}) {
             <Text style={titleHeading}>{post.title.rendered}</Text>
           </View>
           <Text style={readingTime}>3 minute read</Text>
+          {post.acf.blockquote === '' ? <View /> : <Text style={quote}>{post.acf.blockquote}</Text>}
           <Text style={mainContent}>{post.plaintext}</Text>
-          {post.acf.blockquote === '' ? <View style={{ marginTop: -45 }} /> : <Text style={quote}>{post.acf.blockquote}</Text> }
           <Text style={referenceTitle}>References</Text>
-          <Text style={references}>{post.acf.references}</Text>
+          <Text style={references}>{strippedHTML}</Text>
         </View>
       </ScrollView>
     </View>
   );
 }
 
-export default SingleItem;
+SingleItem.propTypes = {
+  post: React.PropTypes.objectOf(React.PropTypes.array),
+};
+
+SingleItem.defaultProps = {
+  post: [],
+};
