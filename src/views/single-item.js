@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, Linking } from 'react-native';
 
 const { height } = Dimensions.get('window');
 
@@ -74,43 +74,55 @@ const {
 } = styles;
 
 export default function SingleItem({ post }) {
-  
-  categoryNumber = () => {
+
+  function categoryNumber() {
     let categoryNews;
     switch (post.categories[0]) {
-        case 3:
-          categoryNews = 'Defense and Security';
-          break;
-        case 4:
-          categoryNews = 'Climate and Environment';
-          break;
-        case 5:
-          categoryNews = 'Indigenous Rights and Issues';
-          break;
-        case 6:
-          categoryNews = 'Law and Governance';
-          break;
-        case 7:
-          categoryNews = 'Natural Resources and Energy';
-          break;
-        case 8:
-          categoryNews = 'Politics and Strategy';
-          break;
-        case 9:
-          categoryNews = 'Shipping and Economics';
-          break;
-        case 10:
-          categoryNews = 'Society and Culture';
-          break;
-        default:
-          categoryNews = 'General News';
-      }
+      case 3:
+        categoryNews = 'Defense and Security';
+        break;
+      case 4:
+        categoryNews = 'Climate and Environment';
+        break;
+      case 5:
+        categoryNews = 'Indigenous Rights and Issues';
+        break;
+      case 6:
+        categoryNews = 'Law and Governance';
+        break;
+      case 7:
+        categoryNews = 'Natural Resources and Energy';
+        break;
+      case 8:
+        categoryNews = 'Politics and Strategy';
+        break;
+      case 9:
+        categoryNews = 'Shipping and Economics';
+        break;
+      case 10:
+        categoryNews = 'Society and Culture';
+        break;
+      default:
+        categoryNews = 'General News';
+    }
     return categoryNews;
   }
 
-
-  const strippedHTML = post.acf.references.replace(/(<([^>]+)>)/ig, '\n');
-  const referenceArray = [];
+  function printReferences() {
+    const noTags = post.acf.references.replace(/(<([^>]+)>)/ig, '').replace(/http/g, ',http').replace(/\s/g, '').split(',');
+    const shiftTag = noTags.shift();
+    return noTags.map((item) => {
+      return (
+        <Text
+          style={references}
+          key={item}
+          onPress={() => { Linking.openURL(item); }}
+        >
+          {item}
+        </Text>
+      );
+    });
+  }
 
   return (
     <View style={mainView}>
@@ -124,7 +136,7 @@ export default function SingleItem({ post }) {
           {post.acf.blockquote === '' ? <View /> : <Text style={quote}>{post.acf.blockquote}</Text>}
           <Text style={mainContent}>{post.plaintext}</Text>
           <Text style={referenceTitle}>References</Text>
-          <Text style={references}>{strippedHTML}</Text>
+          {printReferences()}
         </View>
       </ScrollView>
     </View>
