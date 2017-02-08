@@ -74,26 +74,40 @@ const {
 } = styles;
 
 export default function SingleItem({ post }) {
-  let categoryNews;
-  if (post.categories[0] === 3) {
-    categoryNews = 'Defense and Security';
-  } else if (post.categories[0] === 4) {
-    categoryNews = 'Climate and Environment';
-  } else if (post.categories[0] === 5) {
-    categoryNews = 'Indigenous Rights and Issues';
-  } else if (post.categories[0] === 6) {
-    categoryNews = 'Law and Governance';
-  } else if (post.categories[0] === 7) {
-    categoryNews = 'Natural Resources and Energy';
-  } else if (post.categories[0] === 8) {
-    categoryNews = 'Politics and Strategy';
-  } else if (post.categories[0] === 9) {
-    categoryNews = 'Shipping and Economics';
-  } else if (post.categories[0] === 10) {
-    categoryNews = 'Society and Culture';
-  } else {
-    categoryNews = 'General News';
+  
+  categoryNumber = () => {
+    let categoryNews;
+    switch (post.categories[0]) {
+        case 3:
+          categoryNews = 'Defense and Security';
+          break;
+        case 4:
+          categoryNews = 'Climate and Environment';
+          break;
+        case 5:
+          categoryNews = 'Indigenous Rights and Issues';
+          break;
+        case 6:
+          categoryNews = 'Law and Governance';
+          break;
+        case 7:
+          categoryNews = 'Natural Resources and Energy';
+          break;
+        case 8:
+          categoryNews = 'Politics and Strategy';
+          break;
+        case 9:
+          categoryNews = 'Shipping and Economics';
+          break;
+        case 10:
+          categoryNews = 'Society and Culture';
+          break;
+        default:
+          categoryNews = 'General News';
+      }
+    return categoryNews;
   }
+
 
   const strippedHTML = post.acf.references.replace(/(<([^>]+)>)/ig, '\n');
   const referenceArray = [];
@@ -102,7 +116,7 @@ export default function SingleItem({ post }) {
     <View style={mainView}>
       <ScrollView>
         <View style={{ margin: 25 }}>
-          <Text style={category}>{categoryNews}</Text>
+          <Text style={category}>{categoryNumber()}</Text>
           <View style={titleHeadingContainer}>
             <Text style={titleHeading}>{post.title.rendered}</Text>
           </View>
