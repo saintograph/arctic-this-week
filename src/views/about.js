@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 const styles = StyleSheet.create({
   mainView: {
     backgroundColor: '#f3f3f3',
+    marginTop: 50,
   },
   titleHeadingContainer: {
     borderTopWidth: 1,
@@ -43,27 +45,32 @@ const {
   titleBrand,
 } = styles;
 
-function About() {
-  return (
-    <ScrollView style={mainView}>
-      <View style={{ margin: 25 }}>
-        <View style={titleHeadingContainer}>
-          <Text style={titleHeading}>About
-            <Text style={titleBrand}> The Arctic Institute</Text>
-          </Text>
+class About extends Component {
+  componentDidMount() {
+    Actions.refresh({ key: 'drawer', open: value => !value });
+  }
+  render() {
+    return (
+      <ScrollView style={mainView}>
+        <View style={{ margin: 25 }}>
+          <View style={titleHeadingContainer}>
+            <Text style={titleHeading}>About
+              <Text style={titleBrand}> The Arctic Institute</Text>
+            </Text>
+          </View>
+          <Text style={mainContent}>Established in 2011, The Arctic Institute is an independent,
+          nonprofit 501(c)3 tax-exempt organization headquartered in Washington, D.C
+          with a network of researchers across the world.</Text>
+          <Text style={quote}>"We envision a world in which the diverse and complex issues facing
+          Arctic security are identified, understood,
+          and innovatively resolved."</Text>
+          <Text style={mainContent}>Rigorous, qualitative, and comprehensive research is
+          the Institute’score for developing
+          solutions to challenges and injustices in the circumpolar north.</Text>
         </View>
-        <Text style={mainContent}>Established in 2011, The Arctic Institute is an independent,
-        nonprofit 501(c)3 tax-exempt organization headquartered in Washington, D.C
-         with a network of researchers across the world.</Text>
-        <Text style={quote}>"We envision a world in which the diverse and complex issues facing
-         Arctic security are identified, understood,
-         and innovatively resolved."</Text>
-        <Text style={mainContent}>Rigorous, qualitative, and comprehensive research is
-         the Institute’score for developing
-        solutions to challenges and injustices in the circumpolar north.</Text>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  }
 }
 
 export default About;

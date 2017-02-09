@@ -6,8 +6,9 @@ import promise from 'redux-promise';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import AppShell from './src/MainApp';
 import SwipeView from './src/views/swipe-view';
-import Test from './src/components/test';
+import Drawer from './src/components/drawer';
 import reducers from './src/reducers';
+import About from './src/views/about';
 
 
 const createStoreWithMiddleware = applyMiddleware(
@@ -20,8 +21,13 @@ function rightButton() {
 
 const scenes = Actions.create(
   <Scene key="root">
-    <Scene key="shell" component={AppShell} title="Arctic This Week" onRight={() => { rightButton(); }} rightButtonImage={require('./src/images/menu.png')} />
-    <Scene key="swipeView" component={SwipeView} title="Top 5 This Week" onRight={() => { rightButton(); }} rightButtonImage={require('./src/images/menu.png')} />
+    <Scene key="drawer" component={Drawer} open={false}>
+      <Scene key="main" tabs={false}>
+        <Scene key="shell" component={AppShell} title="Arctic This Week" onRight={() => { rightButton(); }} rightButtonImage={require('./src/images/menu.png')} />
+        <Scene key="swipeView" component={SwipeView} title="Top 5 This Week" onRight={() => { rightButton(); }} rightButtonImage={require('./src/images/menu.png')} />
+        <Scene key="about" component={About} title="About Us" onRight={() => { rightButton(); }} rightButtonImage={require('./src/images/menu.png')} />
+      </Scene>
+    </Scene>
   </Scene>,
 );
 
