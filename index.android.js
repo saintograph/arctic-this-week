@@ -9,27 +9,12 @@ import SwipeView from './src/views/swipe-view';
 import Drawer from './src/components/drawer';
 import reducers from './src/reducers';
 import About from './src/views/about';
+import Contact from './src/views/contact';
 
 
 const createStoreWithMiddleware = applyMiddleware(
   promise,
 )(createStore);
-
-function rightButton() {
-  return console.log('right button');
-}
-
-const scenes = Actions.create(
-  <Scene key="root">
-    <Scene key="drawer" component={Drawer} open={false}>
-      <Scene key="main" tabs={false}>
-        <Scene key="shell" component={AppShell} title="Arctic This Week" onRight={() => { rightButton(); }} rightButtonImage={require('./src/images/menu.png')} />
-        <Scene key="swipeView" component={SwipeView} title="Top 5 This Week" onRight={() => { rightButton(); }} rightButtonImage={require('./src/images/menu.png')} />
-        <Scene key="about" component={About} title="About Us" onRight={() => { rightButton(); }} rightButtonImage={require('./src/images/menu.png')} />
-      </Scene>
-    </Scene>
-  </Scene>,
-);
 
 const styles = StyleSheet.create({
   headerStyle: {
@@ -39,7 +24,7 @@ const styles = StyleSheet.create({
     fontFamily: 'knile-semibold',
   },
   leftButton: {
-    color: '#000000',
+    paddingRight: 40,
   },
   rightButton: {
     height: 24,
@@ -48,6 +33,19 @@ const styles = StyleSheet.create({
   },
 });
 
+const scenes = Actions.create(
+  <Scene key="root">
+    <Scene key="drawer" component={Drawer} open={false}>
+      <Scene key="main" tabs={false}>
+        <Scene key="shell" component={AppShell} title="Arctic This Week" />
+        <Scene key="swipeView" component={SwipeView} title="Top 5 This Week" />
+        <Scene key="contact" component={Contact} title="Contact" />
+        <Scene key="about1" component={About} title="About Us" />
+      </Scene>
+    </Scene>
+  </Scene>,
+);
+
 export default class arctic_this_week extends Component {
   render() {
     return (
@@ -55,9 +53,10 @@ export default class arctic_this_week extends Component {
         <Router
           scenes={scenes}
           navigationBarStyle={styles.headerStyle}
+          leftButtonIconStyle={styles.leftButton}
           titleStyle={styles.navTitle}
+          drawerImage={require('./src/images/hamburger.png')}
           backButtonImage={require('./src/images/back.png')}
-          rightButtonIconStyle={styles.rightButton}
         />
       </Provider>
     );

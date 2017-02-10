@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+const { height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   mainView: {
     backgroundColor: '#f3f3f3',
     marginTop: 50,
+    height,
   },
   titleHeadingContainer: {
     borderTopWidth: 1,
@@ -46,7 +49,7 @@ const {
 } = styles;
 
 class About extends Component {
-  componentDidMount() {
+  componentWillMount() {
     Actions.refresh({ key: 'drawer', open: value => !value });
   }
   render() {

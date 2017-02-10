@@ -3,11 +3,6 @@ import Drawer from 'react-native-drawer';
 import { Actions, DefaultRenderer } from 'react-native-router-flux';
 import SideMenu from './sidemenu';
 
-const propTypes = {
-  navigationState: PropTypes.object,
-  onNavigate: PropTypes.object,
-};
-
 export default class DefaultDrawer extends Component {
   render() {
     const state = this.props.navigationState;
@@ -33,5 +28,3 @@ export default class DefaultDrawer extends Component {
     );
   }
 }
-
-DefaultDrawer.propTypes = propTypes;

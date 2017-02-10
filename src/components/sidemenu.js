@@ -8,7 +8,8 @@ export default function SideMenu() {
   }
   return (
     <View>
-      <Text onPress={Actions.about}>About</Text>
+      <Text onPress={Actions.about1}>About</Text>
+      <Text onPress={Actions.contact}>Contact</Text>
     </View>
   );
 }

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   mainView: {
     backgroundColor: '#f3f3f3',
+    marginTop: 50,
     height,
   },
   titleHeadingContainer: {
@@ -40,23 +42,28 @@ const {
   titleBrand,
 } = styles;
 
-function Contact() {
-  return (
-    <ScrollView style={mainView}>
-      <View style={{ margin: 25 }}>
-        <View style={titleHeadingContainer}>
-          <Text style={titleHeading}>Contact
-          <Text style={titleBrand}> The Arctic Institute</Text>
-          </Text>
+class Contact extends Component {
+  componentWillMount() {
+    Actions.refresh({ key: 'drawer', open: value => !value });
+  }
+  render() {
+    return (
+      <ScrollView style={mainView}>
+        <View style={{ margin: 25 }}>
+          <View style={titleHeadingContainer}>
+            <Text style={titleHeading}>Contact
+            <Text style={titleBrand}> The Arctic Institute</Text>
+            </Text>
+          </View>
+          <Text style={mainContent}>Center for Circumpolar Security Studies
+          Washington, DC 20007</Text>
+          <Text style={mainContent}>Phone: +1 (202) 350-1384</Text>
+          <Text style={mainContent}>Email: info@thearcticinstitute.org</Text>
+          <Text style={mainContent}>Media Enquiries: media@thearcticinstitute.org</Text>
         </View>
-        <Text style={mainContent}>Center for Circumpolar Security Studies
-        Washington, DC 20007</Text>
-        <Text style={mainContent}>Phone: +1 (202) 350-1384</Text>
-        <Text style={mainContent}>Email: info@thearcticinstitute.org</Text>
-        <Text style={mainContent}>Media Enquiries: media@thearcticinstitute.org</Text>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  }
 }
 
 export default Contact;
