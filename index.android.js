@@ -40,7 +40,7 @@ const scenes = Actions.create(
         <Scene key="shell" component={AppShell} title="Arctic This Week" />
         <Scene key="swipeView" component={SwipeView} title="Top 5 This Week" />
         <Scene key="contact" component={Contact} title="Contact" />
-        <Scene key="about1" component={About} title="About Us" />
+        <Scene key="about" component={About} title="About Us" />
       </Scene>
     </Scene>
   </Scene>,
