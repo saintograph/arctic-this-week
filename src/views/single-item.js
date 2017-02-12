@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView, Linking } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Dimensions, ScrollView, Linking, TouchableOpacity } from 'react-native';
+import Share, { ShareSheet, Button } from 'react-native-share';
 
 const { height } = Dimensions.get('window');
 
@@ -20,6 +21,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: '#e2e2e2',
     borderBottomWidth: 1,
+    marginBottom: 15,
     paddingTop: 20,
     paddingBottom: 20,
   },
@@ -27,11 +29,6 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontFamily: 'knile-semibold',
     color: '#1c1c1e',
-  },
-  readingTime: {
-    fontFamily: 'calendas_plus',
-    paddingTop: 5,
-    fontSize: 14,
   },
   mainContent: {
     marginTop: 25,
@@ -59,6 +56,10 @@ const styles = StyleSheet.create({
     fontFamily: 'calendas_plus',
     color: '#99180d',
   },
+  instructions: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
 });
 
 const {
@@ -66,18 +67,35 @@ const {
   category,
   titleHeadingContainer,
   titleHeading,
-  readingTime,
   mainContent,
   quote,
   referenceTitle,
   references,
+  instructions,
 } = styles;
 
-export default function SingleItem({ post }) {
+// const TWITTER_ICON = require('../images/twitter.png');
 
-  function categoryNumber() {
+export default class SingleItem extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+    };
+  }
+
+  onCancel() {
+    this.setState({ visible: false });
+  }
+
+  onOpen() {
+    this.setState({ visible: true });
+  }
+
+  categoryNumber() {
     let categoryNews;
-    switch (post.categories[0]) {
+    switch (this.props.post.categories[0]) {
       case 3:
         categoryNews = 'Defense and Security';
         break;
@@ -108,8 +126,8 @@ export default function SingleItem({ post }) {
     return categoryNews;
   }
 
-  function printReferences() {
-    const noTags = post.acf.references.replace(/(<([^>]+)>)/ig, '').replace(/http/g, ',http').replace(/\s/g, '').split(',');
+  printReferences() {
+    const noTags = this.props.post.acf.references.replace(/(<([^>]+)>)/ig, '').replace(/http/g, ',http').replace(/\s/g, '').split(',');
     const shiftTag = noTags.shift();
     return noTags.map((item) => {
       return (
@@ -124,24 +142,50 @@ export default function SingleItem({ post }) {
     });
   }
 
-  return (
-    <View style={mainView}>
-      <ScrollView>
-        <View style={{ margin: 25 }}>
-          <Text style={category}>{categoryNumber()}</Text>
-          <View style={titleHeadingContainer}>
-            <Text style={titleHeading}>{post.title.rendered}</Text>
+  render() {
+    let shareOptions = {
+      title: this.props.post.title.rendered,
+      message: this.props.post.acf.excerpt,
+      // url: this.props.post.acf.shortened_url,
+      // subject: this.props.post.title.rendered,
+    };
+    return (
+      <View style={mainView}>
+        <ScrollView>
+          <View style={{ margin: 25 }}>
+            <Text style={category}>{this.categoryNumber()}</Text>
+            <View style={titleHeadingContainer}>
+              <Text style={titleHeading}>{this.props.post.title.rendered}</Text>
+            </View>
+            <TouchableOpacity onPress={this.onOpen.bind(this)}>
+              <View style={styles.instructions}>
+                <Text>Share UI Component</Text>
+              </View>
+            </TouchableOpacity>
+            {this.props.post.acf.blockquote === '' ? <View /> : <Text style={quote}>{this.props.post.acf.blockquote}</Text>}
+            <Text style={mainContent}>{this.props.post.plaintext}</Text>
+            <Text style={referenceTitle}>References</Text>
+            {this.printReferences()}
           </View>
-          <Text style={readingTime}>3 minute read</Text>
-          {post.acf.blockquote === '' ? <View /> : <Text style={quote}>{post.acf.blockquote}</Text>}
-          <Text style={mainContent}>{post.plaintext}</Text>
-          <Text style={referenceTitle}>References</Text>
-          {printReferences()}
-        </View>
-      </ScrollView>
-    </View>
-  );
+          <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
+            <Button
+              iconSrc={require('../images/twitter.png')}
+              onPress={() => {
+                this.onCancel();
+                setTimeout(() => {
+                  Share.shareSingle(Object.assign(shareOptions, {
+                    "social": "twitter"
+                  }));
+                }, 300);
+              }}
+            />
+          </ShareSheet>
+        </ScrollView>
+      </View>
+    );
+  }
 }
+
 
 SingleItem.propTypes = {
   post: React.PropTypes.objectOf(React.PropTypes.array),
