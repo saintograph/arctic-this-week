@@ -22,6 +22,7 @@ export default class SwipeView extends Component {
       <Swiper
         index={index}
         loop={false}
+        activeDotColor={'#000000'}
       >
         {this.renderPost()}
       </Swiper>

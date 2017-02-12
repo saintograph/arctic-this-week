@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView, Linking, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, Linking, Image, TouchableOpacity } from 'react-native';
 import Share, { ShareSheet, Button } from 'react-native-share';
 
 const { height } = Dimensions.get('window');
@@ -60,6 +60,22 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
+  sharingButtonText: {
+    fontFamily: 'calendas_plus',
+    fontSize: 16,
+  },
+  sharingIcon: {
+    height: 30,
+    width: 30,
+  },
+  sharingIconContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  shareSheetStyles: {
+    marginBottom: 10,
+  },
 });
 
 const {
@@ -71,10 +87,11 @@ const {
   quote,
   referenceTitle,
   references,
-  instructions,
+  sharingButtonText,
+  shareSheetStyles,
+  sharingIcon,
+  sharingIconContainer,
 } = styles;
-
-// const TWITTER_ICON = require('../images/twitter.png');
 
 export default class SingleItem extends Component {
 
@@ -146,8 +163,7 @@ export default class SingleItem extends Component {
     let shareOptions = {
       title: this.props.post.title.rendered,
       message: this.props.post.acf.excerpt,
-      // url: this.props.post.acf.shortened_url,
-      // subject: this.props.post.title.rendered,
+      url: this.props.post.acf.shortened_url,
     };
     return (
       <View style={mainView}>
@@ -157,28 +173,53 @@ export default class SingleItem extends Component {
             <View style={titleHeadingContainer}>
               <Text style={titleHeading}>{this.props.post.title.rendered}</Text>
             </View>
-            <TouchableOpacity onPress={this.onOpen.bind(this)}>
-              <View style={styles.instructions}>
-                <Text>Share UI Component</Text>
-              </View>
-            </TouchableOpacity>
             {this.props.post.acf.blockquote === '' ? <View /> : <Text style={quote}>{this.props.post.acf.blockquote}</Text>}
             <Text style={mainContent}>{this.props.post.plaintext}</Text>
             <Text style={referenceTitle}>References</Text>
             {this.printReferences()}
+            <TouchableOpacity onPress={this.onOpen.bind(this)}>
+              <View style={styles.sharingIconContainer}>
+                <Image
+                  source={require('../images/share.png')}
+                  style={sharingIcon}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
-          <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
+          <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)} style={shareSheetStyles}>
             <Button
               iconSrc={require('../images/twitter.png')}
               onPress={() => {
                 this.onCancel();
                 setTimeout(() => {
                   Share.shareSingle(Object.assign(shareOptions, {
-                    "social": "twitter"
+                    social: 'twitter',
                   }));
                 }, 300);
               }}
-            />
+            ><Text style={sharingButtonText}>Twitter</Text></Button>
+            <Button
+              iconSrc={require('../images/facebook.png')}
+              onPress={() => {
+                this.onCancel();
+                setTimeout(() => {
+                  Share.shareSingle(Object.assign(shareOptions, {
+                    social: 'facebook',
+                  }));
+                }, 300);
+              }}
+            ><Text style={sharingButtonText}>Facebook</Text></Button>
+            <Button
+              iconSrc={require('../images/google.png')}
+              onPress={() => {
+                this.onCancel();
+                setTimeout(() => {
+                  Share.shareSingle(Object.assign(shareOptions, {
+                    social: 'googleplus',
+                  }));
+                }, 300);
+              }}
+            ><Text style={sharingButtonText}>Google +</Text></Button>
           </ShareSheet>
         </ScrollView>
       </View>
