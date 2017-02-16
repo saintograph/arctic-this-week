@@ -90,7 +90,6 @@ const {
   sharingButtonText,
   shareSheetStyles,
   sharingIcon,
-  sharingIconContainer,
 } = styles;
 
 export default class SingleItem extends Component {
