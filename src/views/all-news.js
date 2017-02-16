@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, ActivityIndicator, RefreshControl } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import TimeAgo from 'react-native-timeago';
 import * as Animatable from 'react-native-animatable';
@@ -41,6 +41,7 @@ class AllNews extends Component {
     super(props);
     this.state = {
       image: '',
+      refreshing: false,
     };
   }
 
@@ -88,12 +89,30 @@ class AllNews extends Component {
       });
   }
 
+  async _onRefresh() {
+    this.setState({
+      refreshing: true,
+    });
+    await this.props.loadAllNews();
+    this.setState({
+      refreshing: false,
+    });
+  }
+
   render() {
     return (
       <View style={{ marginTop: 54 }}>
         {this.state.image === '' ? <ActivityIndicator style={{ marginTop: 50 }} size="large" color="#7b7c7f" /> :
         <Animatable.View animation="fadeIn">
-          <ScrollView>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing} 
+                onRefresh={this._onRefresh.bind(this)}
+              />
+            }
+          >
             <HeroImage imageURL={this.state.image} />
             <View style={{ marginTop: 20, marginBottom: -25 }}>
               {this.renderNews()}

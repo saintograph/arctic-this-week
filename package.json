@@ -12,6 +12,7 @@
     "react": "~15.4.0-rc.4",
     "react-native": "0.38.1",
     "react-native-animatable": "^1.1.0",
+    "react-native-connection-info": "^1.1.0",
     "react-native-drawer": "^2.3.0",
     "react-native-router-flux": "^3.37.0",
     "react-native-share": "^1.0.19",
