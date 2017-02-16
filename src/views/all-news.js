@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import TimeAgo from 'react-native-timeago';
+import * as Animatable from 'react-native-animatable';
 import { loadAllNews } from '../actions/index';
 import HeroImage from '../components/hero-image';
 
@@ -36,9 +37,16 @@ const styles = StyleSheet.create({
 const { newsTitle, newsBlock, metaData, newsExcerpt } = styles;
 
 class AllNews extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      image: '',
+    };
+  }
 
   async componentDidMount() {
     await this.props.loadAllNews();
+    await this.fetchHero();
   }
 
   renderNews() {
@@ -65,16 +73,34 @@ class AllNews extends Component {
     });
   }
 
+  fetchHero() {
+    const _this = this;
+    const imageWPAPI = 'http://app.thearcticinstitute.org/wp-json/wp/v2/media?per_page=1&orderby=date';
+    fetch(imageWPAPI)
+      .then((response) => {
+        const data = response.json();
+        return data;
+      })
+      .then((data) => {
+        _this.setState({
+          image: data[0].guid.rendered,
+        });
+      });
+  }
+
   render() {
-    const imageURL = 'https://images.unsplash.com/photo-1478194409487-fa5c1eb18622?dpr=1&auto=format&fit=crop&w=1500&h=970&q=80&cs=tinysrgb&crop=';
     return (
       <View style={{ marginTop: 54 }}>
-        <ScrollView>
-          <HeroImage imageURL={imageURL} />
-          <View style={{ marginTop: 20, marginBottom: -25 }}>
-            {this.renderNews()}
-          </View>
-        </ScrollView>
+        {this.state.image === '' ? <ActivityIndicator style={{ marginTop: 50 }} size="large" color="#7b7c7f" /> :
+        <Animatable.View animation="fadeIn">
+          <ScrollView>
+            <HeroImage imageURL={this.state.image} />
+            <View style={{ marginTop: 20, marginBottom: -25 }}>
+              {this.renderNews()}
+            </View>
+          </ScrollView>
+        </Animatable.View>
+        }
       </View>
     );
   }
