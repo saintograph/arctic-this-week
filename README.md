@@ -4,8 +4,11 @@ Built with React Native, and pulls its data from a Wordpress backend for easy ad
 Make sure you have React-Native CLI installed on your machine. [Instructions](https://facebook.github.io/react-native/docs/getting-started.html)
 
 $ git clone https://github.com/winfredselwyn/Arctic_This_Week.git your_folder
+
 $ cd your_folder
+
 $ npm_install
+
 $ react-native start
 
 Open a new console
