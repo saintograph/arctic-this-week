@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, ActivityIndicator, RefreshControl, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import TimeAgo from 'react-native-timeago';
-import * as Animatable from 'react-native-animatable';
 import { loadAllNews } from '../actions/index';
 import HeroImage from '../components/hero-image';
 
@@ -42,36 +41,13 @@ class AllNews extends Component {
     this.state = {
       image: '',
       refreshing: false,
+      fadeAnim: new Animated.Value(0),
     };
   }
 
   async componentDidMount() {
     await this.props.loadAllNews();
     await this.fetchHero();
-  }
-
-  renderNews() {
-    const { news } = this.props.news;
-    const swipeMe = newsProps => Actions.swipeView({ newsProps });
-    return news.map((post, index) => {
-      const newsProps = {
-        index,
-        post: news,
-      };
-      return (
-        <TouchableOpacity key={post.id} onPress={swipeMe.bind(this, newsProps)}>
-          <View style={newsBlock}>
-            <Text
-              style={newsTitle}
-            >
-              {post.title.rendered}
-            </Text>
-            <Text style={metaData}><TimeAgo time={post.date} /> | {post.acf.author}</Text>
-            <Text style={newsExcerpt}>{post.acf.excerpt}</Text>
-          </View>
-        </TouchableOpacity>
-      );
-    });
   }
 
   fetchHero() {
@@ -99,26 +75,53 @@ class AllNews extends Component {
     });
   }
 
+
+  renderNews() {
+    const { news } = this.props.news;
+    const swipeMe = newsProps => Actions.swipeView({ newsProps });
+    Animated.timing(
+      this.state.fadeAnim,
+      { toValue: 1 },
+    ).start();
+    return news.map((post, index) => {
+      const newsProps = {
+        index,
+        post: news,
+      };
+      return (
+        <TouchableOpacity key={post.id} onPress={swipeMe.bind(this, newsProps)}>
+          <View style={newsBlock}>
+            <Text
+              style={newsTitle}
+            >
+              {post.title.rendered}
+            </Text>
+            <Text style={metaData}><TimeAgo time={post.date} /> | {post.acf.author}</Text>
+            <Text style={newsExcerpt}>{post.acf.excerpt}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    });
+  }
+
   render() {
     return (
       <View style={{ marginTop: 54 }}>
         {this.state.image === '' ? <ActivityIndicator style={{ marginTop: 50 }} size="large" color="#7b7c7f" /> :
-        <Animatable.View animation="fadeIn">
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing} 
-                onRefresh={this._onRefresh.bind(this)}
-              />
-            }
-          >
-            <HeroImage imageURL={this.state.image} />
-            <View style={{ marginTop: 20, marginBottom: -25 }}>
-              {this.renderNews()}
-            </View>
-          </ScrollView>
-        </Animatable.View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh.bind(this)}
+            />
+          }
+        >
+          <HeroImage imageURL={this.state.image} />
+          <Animated.View style={{ marginTop: 20, marginBottom: -25, opacity: this.state.fadeAnim }}>
+            {this.renderNews()}
+          </Animated.View>
+        </ScrollView>
         }
       </View>
     );

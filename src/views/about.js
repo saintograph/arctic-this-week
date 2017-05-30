@@ -68,7 +68,7 @@ class About extends Component {
           Arctic security are identified, understood,
           and innovatively resolved."</Text>
           <Text style={mainContent}>Rigorous, qualitative, and comprehensive research is
-          the Institute’score for developing
+          the Institute’s core for developing
           solutions to challenges and injustices in the circumpolar north.</Text>
         </View>
       </ScrollView>

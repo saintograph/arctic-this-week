@@ -208,17 +208,6 @@ export default class SingleItem extends Component {
                 }, 300);
               }}
             ><Text style={sharingButtonText}>Facebook</Text></Button>
-            <Button
-              iconSrc={require('../images/google.png')}
-              onPress={() => {
-                this.onCancel();
-                setTimeout(() => {
-                  Share.shareSingle(Object.assign(shareOptions, {
-                    social: 'googleplus',
-                  }));
-                }, 300);
-              }}
-            ><Text style={sharingButtonText}>Google +</Text></Button>
           </ShareSheet>
         </ScrollView>
       </View>
