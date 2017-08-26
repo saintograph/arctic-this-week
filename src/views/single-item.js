@@ -92,7 +92,7 @@ const {
   sharingIcon,
 } = styles;
 
-export default class SingleItem extends Component {
+class SingleItem extends Component {
 
   constructor(props) {
     super(props);
@@ -223,3 +223,5 @@ SingleItem.propTypes = {
 SingleItem.defaultProps = {
   post: [],
 };
+
+export default SingleItem;

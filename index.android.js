@@ -35,14 +35,14 @@ const styles = StyleSheet.create({
 
 const scenes = Actions.create(
   <Scene key="root">
-    <Scene key="drawer" component={Drawer} open={false}>
-      <Scene key="main" tabs={false}>
-        <Scene key="shell" component={AppShell} title="Arctic This Week" />
-        <Scene key="swipeView" component={SwipeView} title="Top 5 This Week" />
-        <Scene key="contact" component={Contact} title="Contact" />
-        <Scene key="about" component={About} title="About Us" />
-      </Scene>
+    {/* <Scene key="drawer" component={Drawer} open={false}> */}
+    <Scene key="main" tabs={false}>
+      <Scene key="shell" component={AppShell} title="Arctic This Week" />
+      <Scene key="swipeView" component={SwipeView} title="Top 5 This Week" />
+      <Scene key="contact" component={Contact} title="Contact" />
+      <Scene key="about" component={About} title="About Us" />
     </Scene>
+    {/* </Scene> */}
   </Scene>,
 );
 
